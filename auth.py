@@ -11,7 +11,7 @@ def hash_password(password):
 def verify_password(password, hashed_password):
     """Verifica se a senha corresponde ao hash armazenado."""
     return bcrypt.checkpw(password.encode('utf-8'), hashed_password.encode('utf-8'))
-
+'''
 def validate_registration_fields(name, email, password, continent, location, department):
     """Valida os campos de registro."""
     placeholders = {
@@ -40,6 +40,29 @@ def validate_registration_fields(name, email, password, continent, location, dep
         return False, "Department field is required."
 
     return True, ""
+'''
+
+def validate_registration_fields(name, email, password, continent, location, department):
+    """Valida os campos de registro."""
+    placeholders = {
+        "name": (name, "Type your name", "Name field is required."),
+        "email": (email, "Type your email", "Email field is required."),
+        "password": (password, "Type your password", "Password field is required."),
+        "continent": (continent, "Select your Global Location", "Continent field is required."),
+        "location": (location, "Select your Local Location", "Location field is required."),
+        "department": (department, "Select your Department", "Department field is required.")
+    }
+
+    all_invalid = all(value == placeholder or not value for value, placeholder, _ in placeholders.values())
+    if all_invalid:
+        return False, "All fields are required"
+
+    for _, (value, placeholder, error_message) in placeholders.items():
+        if value == placeholder or not value:
+            return False, error_message
+
+    return True, ""
+
 
 def register_user(name, email, password, continent, location, department):
     """Registra um novo usuário no banco de dados."""
