@@ -108,7 +108,7 @@ class LoginPage(ttk.Frame):
         container = ttk.Frame(self)
         container.pack(expand=True)
         container.pack_propagate(False)
-        container.configure(width=400, height=450)
+        container.configure(width=400, height=550)
 
         image_label = ttk.Label(container, image=self.photo)
         image_label.pack(pady=(0, 0))
@@ -145,6 +145,7 @@ class LoginPage(ttk.Frame):
         # Botões
         ttk.Button(container, text="Login", command=self.login).pack(pady=5, ipadx=20)
         ttk.Button(container, text="Register", command=self.go_to_register).pack(pady=5, ipadx=20)
+        ttk.Button(container, text="Forgot my password", command=self.forgot_password, style="Small.TButton", width=12).pack(pady=5)
 
 
     def on_email_focus_in(self, event):
@@ -174,7 +175,6 @@ class LoginPage(ttk.Frame):
 
         if user:
             self.message_label.config(text="Login successful!", foreground="green")
-            # Redireciona para a tela de menu, passando o registro do usuário
             self.controller.show_menu(user)
         else:
             self.message_label.config(text="Invalid email or password.", foreground="red")
@@ -184,6 +184,19 @@ class LoginPage(ttk.Frame):
         self.controller.destroy_frame(LoginPage)
         # Mostra a tela de Register (se já não existir, ela será recriada em show_frame)
         self.controller.show_frame(RegisterPage)
+
+    def forgot_password(self):
+        popup = tk.Toplevel(self)
+        popup.title("Recuperar Senha")
+        tk.Label(popup, text="Digite seu email:").pack(pady=5)
+        email_var = tk.StringVar()
+        ttk.Entry(popup, textvariable=email_var).pack(pady=5)
+        def send():
+            from auth import send_password_reset
+            ok = send_password_reset(email_var.get())
+            msg = "Email de recuperação enviado!" if ok else "Email não encontrado."
+            tk.Label(popup, text=msg).pack(pady=5)
+        ttk.Button(popup, text="Enviar", command=send).pack(pady=10)
 
 
 class RegisterPage(ttk.Frame):
@@ -335,6 +348,10 @@ class RegisterPage(ttk.Frame):
 
         if status == "success":
             self.block_fields()
+            self.message_label.config(
+                text="Verifique seu email para ativar a conta.",
+                foreground="green"
+            )
 
     def back(self):
         # Destrói a instância atual de RegisterPage
