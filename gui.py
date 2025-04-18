@@ -187,16 +187,16 @@ class LoginPage(ttk.Frame):
 
     def forgot_password(self):
         popup = tk.Toplevel(self)
-        popup.title("Recuperar Senha")
-        tk.Label(popup, text="Digite seu email:").pack(pady=5)
+        popup.title("Recover your password")
+        tk.Label(popup, text="Type your e-mail:").pack(pady=5)
         email_var = tk.StringVar()
         ttk.Entry(popup, textvariable=email_var).pack(pady=5)
         def send():
             from auth import send_password_reset
             ok = send_password_reset(email_var.get())
-            msg = "Email de recuperação enviado!" if ok else "Email não encontrado."
+            msg = "Recover e-mail sent" if ok else "E-mail not found"
             tk.Label(popup, text=msg).pack(pady=5)
-        ttk.Button(popup, text="Enviar", command=send).pack(pady=10)
+        ttk.Button(popup, text="Send", command=send).pack(pady=10)
 
 
 class RegisterPage(ttk.Frame):
@@ -349,7 +349,7 @@ class RegisterPage(ttk.Frame):
         if status == "success":
             self.block_fields()
             self.message_label.config(
-                text="Verifique seu email para ativar a conta.",
+                text="Verify your e-mail to activate your account",
                 foreground="green"
             )
 
