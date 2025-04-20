@@ -1,4 +1,3 @@
-# database_item_codes.py
 from .databaseConnect import connect
 
 def create_item_codes_table():

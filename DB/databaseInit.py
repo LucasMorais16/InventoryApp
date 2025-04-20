@@ -8,14 +8,11 @@ from .database_checklist import create_checklists_tables
 from .database_checklist_template import create_checklist_templates_tables
 
 def create_tables():
-    # Cria as tabelas de usuários, localizações e departamentos
     create_user_tables()
     create_location_tables()
     populate_location_data()
     create_departments_table()      
-    populate_departments_data()     
-    
-    # Cria as tabelas de estoque e códigos dos itens
+    populate_departments_data()       
     create_stockroom_table()        
     create_item_codes_table()      
     populate_item_codes_data()      

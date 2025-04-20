@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from datetime import datetime
 
-# Import database functions
 from DB.databaseConnect import connect
 from DB.database_checklist_template import (
     get_all_templates,
