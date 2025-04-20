@@ -11,10 +11,15 @@ def login_window():
     app.mainloop()
 
 
+
 class InventoryApp(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Inventory App")
+        # self.title("Inventory App")
+        self.title("InventoryApp")
+
+        self.iconbitmap(r"Icon\logo.ico")
+
         self.state("zoomed")  # Fullscreen
         self.configure(bg="#f0f4f8")
 
