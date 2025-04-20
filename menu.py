@@ -4,6 +4,7 @@ from tkinter import ttk
 from gui import LoginPage
 from InventoryScreen import InventoryScreen
 from PIL import Image, ImageTk  # Importa as classes do Pillow
+from Checklist import ChecklistTemplateScreen
 
 class MenuScreen(ttk.Frame):
     def __init__(self, parent, controller, user):
@@ -69,13 +70,33 @@ class MenuScreen(ttk.Frame):
         info_text = (
             "Program Info and Contacts:\n"
             "Email: lucas.santoslima.morais@hotmail.com\n"
-            "Phone: (00) 1234-5678"
         )
         info_label = tk.Label(self.content_area, text=info_text, bg="#f0f4f8", font=("Roboto", 12))
         info_label.pack(pady=10)
 
     def open_checklist(self):
-        print("Checklist clicked")
+        # Remove widgets atuais na área de conteúdo
+        for widget in self.content_area.winfo_children():
+            widget.destroy()
+        # Insere a tela de templates de checklist e define o callback
+        ChecklistTemplateScreen(
+            self.content_area,
+            self.user,
+            on_template_selected=self.open_checklist_instances
+        )
+
+    def open_checklist_instances(self, template_id):
+       # limpa área
+        for widget in self.content_area.winfo_children():
+            widget.destroy() 
+        # importa aqui para não criar dependência circular
+        from Checklist import ChecklistInstanceScreen
+        ChecklistInstanceScreen(
+            self.content_area,
+            self.user,
+            template_id,
+            on_back=self.open_checklist  # volta para a lista de templates
+        )
     
     def open_inventory(self):
         # Remove widgets atuais na área de conteúdo
