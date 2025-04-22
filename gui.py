@@ -109,6 +109,9 @@ class LoginPage(ttk.Frame):
         image = image.resize((80, 100))  # Redimensiona se quiser
         self.photo = ImageTk.PhotoImage(image)
 
+        style = ttk.Style()
+        style.configure("Small.TButton", font=("TkDefaultFont", 8)) 
+
         # Container centralizado
         container = ttk.Frame(self)
         container.pack(expand=True)
@@ -150,7 +153,7 @@ class LoginPage(ttk.Frame):
         # Botões
         ttk.Button(container, text="Login", command=self.login).pack(pady=5, ipadx=20)
         ttk.Button(container, text="Register", command=self.go_to_register).pack(pady=5, ipadx=20)
-        ttk.Button(container, text="Forgot my password", command=self.forgot_password, style="Small.TButton", width=12).pack(pady=5)
+        ttk.Button(container, text="Forgot my password", command=self.forgot_password, style="Small.TButton").pack(pady=5, ipadx=20)
 
 
     def on_email_focus_in(self, event):

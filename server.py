@@ -7,24 +7,24 @@ app = Flask(__name__)
 def verify_email_ep():
     token = request.args.get('token', '')
     if auth.verify_email(token):
-        return '<h2>Email confirmado!</h2><p>Agora você pode voltar ao app e fazer login.</p>'
-    return '<h2>Link inválido ou expirado.</h2>'
+        return '<h2>Email confirmed!</h2><p>You can now return to the app and log in.</p>'
+    return '<h2>Invalid or expired link.</h2>'
 
-@app.route('/reset_password', methods=['GET','POST'])
+@app.route('/reset_password', methods=['GET', 'POST'])
 def reset_password_ep():
     token = request.args.get('token', '')
     if request.method == 'GET':
         return render_template_string('''
             <form method="post">
-                <label>Nova senha:</label><br>
+                <label>New password:</label><br>
                 <input type="password" name="password" /><br><br>
-                <button type="submit">Salvar</button>
+                <button type="submit">Save</button>
             </form>
         ''')
-    new_pw = request.form.get('password','')
+    new_pw = request.form.get('password', '')
     if auth.reset_password(token, new_pw):
-        return '<h2>Senha redefinida!</h2><p>Use a nova senha para entrar.</p>'
-    return '<h2>Link inválido ou expirado.</h2>'
+        return '<h2>Password reset!</h2><p>Use the new password to log in.</p>'
+    return '<h2>Invalid or expired link.</h2>'
 
 if __name__ == '__main__':
     app.run(debug=True)
