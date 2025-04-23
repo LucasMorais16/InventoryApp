@@ -1,1 +1,8 @@
 psycopg
+bcrypt
+secrets
+tkinter
+smtplib
+pillow
+flask 
+python-dotenv 
